@@ -6,6 +6,9 @@
 
 body {
   font-size: 14px;
+  background-color: #222222;
+  color: white;
+  font-size: 18px;
 }
 
 div {

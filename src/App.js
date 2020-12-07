@@ -1,31 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
+import Header from "./components/Header";
 
-import "./styles.css";
+const App = () => {
+  const [projects, setProjects] = useState([]);
 
-function App() {
-  async function handleAddRepository() {
-    // TODO
-  }
-
-  async function handleRemoveRepository(id) {
-    // TODO
-  }
+  const handleAddProject = () => {
+    setProjects([...projects, `New Project ${Date.now()}`]);
+  };
 
   return (
-    <div>
-      <ul data-testid="repository-list">
-        <li>
-          Repositório 1
+    <>
+      <Header title="Projects" />
 
-          <button onClick={() => handleRemoveRepository(1)}>
-            Remover
-          </button>
-        </li>
+      <ul>
+        {projects.map((project) => (
+          <li key={projects.indexOf(project)}>{project}</li>
+        ))}
       </ul>
 
-      <button onClick={handleAddRepository}>Adicionar</button>
-    </div>
+      <button type="button" onClick={handleAddProject}>
+        Add Project
+      </button>
+    </>
   );
-}
+};
 
 export default App;
