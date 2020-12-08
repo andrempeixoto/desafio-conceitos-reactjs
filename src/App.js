@@ -1,12 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "./components/Header";
+import api from "./services/api";
 
 const App = () => {
   const [projects, setProjects] = useState([]);
 
-  const handleAddProject = () => {
-    setProjects([...projects, `New Project ${Date.now()}`]);
-  };
+  useEffect(() => {
+    api.get("projects").then((response) => {
+      setProjects(response.data);
+    });
+  }, []);
+
+  async function handleAddProject() {
+    const response = await api.post("projects", {
+      title: `New Project ${Date.now()}`,
+      owner: "Andre Peixoto",
+    });
+
+    const project = response.data;
+
+    setProjects([...projects, project]);
+  }
 
   return (
     <>
@@ -14,7 +28,7 @@ const App = () => {
 
       <ul>
         {projects.map((project) => (
-          <li key={projects.indexOf(project)}>{project}</li>
+          <li key={project.id}>{project.title}</li>
         ))}
       </ul>
 
